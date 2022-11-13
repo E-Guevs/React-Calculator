@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import formatExpression from "./formatExpression";
+import formatExpression from "../style functions/formatExpression";
 
 export default class DisplayContainer extends Component {
   render() {

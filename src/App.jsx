@@ -3,7 +3,7 @@ import Buttons from "./components/Buttons";
 import DisplayContainer from "./components/DisplayContainer";
 import Hotkeys from "./components/Hotkeys";
 import HotkeysTitle from "./components/HotkeysTitle";
-import addEffects from "./addEffects";
+import addEffects from "./style functions/addEffects";
 
 export default class Calculator extends Component {
   constructor(props) {
