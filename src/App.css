@@ -1,38 +1,270 @@
-.App {
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Play&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root,
+body {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: clamp(9px, min(4.375vw, 2.35vh), 16px);
   text-align: center;
+  user-select: none;
+
+  --color-root: linear-gradient(to top left, #9ac0df, #80cbc4);
+  --color-display-container: #0f1619;
+  --color-calculation: #4db6ac;
+  --color-buttons-container: #1a2226;
+
+  --color-operand: linear-gradient(to bottom left, #37474f, #263238);
+  --color-operand-active: #546e7a;
+
+  --color-operator: linear-gradient(to bottom left, #00796b, #004d40);
+  --color-operator-active: #009688;
+
+  --color-erase: linear-gradient(to bottom left, #5a509e, #39247d);
+  --color-erase-active: #6f69a4;
+
+  --color-equals: linear-gradient(to bottom left, #386f93, #194865);
+  --color-equals-active: #5888ad;
+
+  --color-button-active: ghostwhite;
+  --scale-active: scale(0.95);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body::before {
+  position: fixed;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: var(--color-root);
+  z-index: -1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* APEX CONTAINER */
+#container {
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: space-evenly;
   align-items: center;
+}
+
+/* TITLE AS HEADING H1 */
+h1 {
+  padding: 0 0.5em;
+  font-size: clamp(20px, 1.6rem, 25.6px);
+}
+
+/* DESCRIPTION BELOW H1 */
+.keyboard-support {
+  margin-bottom: 0.25em;
+  font-size: clamp(14px, 1.2rem, 19.2px);
+}
+
+/* CALCULATOR MAIN CONTAINER */
+#calculator {
+  position: relative;
+  width: 21.45em;
+  border-radius: 1em;
+  box-shadow: 0em 0em 0.3em rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+/* HOTKEYS GUIDE MAIN CONTAINER */
+#calculator-hotkeys {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* DISPLAY CONTAINER AND HOTKEYS TITLE */
+#display-container,
+#hotkeys-title {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1em;
+  height: 9rem;
+  justify-content: flex-end;
+  font-family: "Play", sans-serif;
+  text-align: right;
+  color: ghostwhite;
+  background: var(--color-display-container);
+  overflow: hidden;
+}
+
+/* HOTKEYS TITLE */
+#hotkeys-title {
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  font-size: 4rem;
 }
 
-.App-link {
-  color: #61dafb;
+/* INPUT DISPLAY */
+#display {
+  padding-bottom: 0.2em;
+  font-size: 2rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* CALCULATION */
+#calculation {
+  padding-top: 0.4em;
+  font-size: 1.5rem;
+  color: var(--color-calculation);
+}
+
+/* BUTTONS CONTAINER AND HOTKEYS CONTAINER */
+#buttons-container,
+#hotkeys-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 1em;
+  padding: 1em;
+  height: calc(100% - 9em);
+  color: ghostwhite;
+  background: var(--color-buttons-container);
+}
+
+/* BUTTON AND HOTKEY */
+.button,
+.hotkey {
+  aspect-ratio: 1;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2rem;
+  color: inherit;
+  border: none;
+  border-radius: 0.3em;
+}
+
+/* HOTKEY */
+.hotkey {
+  color: black;
+  background: ghostwhite;
+}
+
+/* EQUALS BUTTON */
+#equals {
+  background: var(--color-equals);
+}
+
+/* ZERO BUTTON */
+#zero,
+.hotkey:nth-child(17) {
+  aspect-ratio: unset;
+  grid-column: 1 / 3;
+}
+
+/* OPERAND BUTTONS */
+.operand {
+  background: var(--color-operand);
+}
+
+/* OPERATOR BUTTONS */
+.operator {
+  background: var(--color-operator);
+}
+
+/* ERASE BUTTONS */
+.erase {
+  background: var(--color-erase);
+}
+
+/* HOTKEY FOR BACKSPACE BUTTON */
+.hotkey:nth-child(2) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+/* TEXTS IN THE HOTKEY FOR BACKSPACE BUTTON */
+.hotkey:nth-child(2) span {
+  align-self: end;
+  line-height: 1.4rem;
+}
+/* "SPACE" TEXT IN THE HOTKEY FOR BACKSPACE BUTTON */
+.hotkey:nth-child(2) span:nth-child(2) {
+  align-self: start;
+}
+
+/* HOTKEY FOR EQUALS BUTTON */
+.hotkey:last-child {
+  font-size: 1.5rem;
+}
+
+/* TOGGLE TO SHOW/HIDE HOTKEYS GUIDE */
+#toggle-hotkey-display {
+  margin-top: 0.5em;
+  padding-block: 0.2em;
+  width: 16em;
+  font-size: clamp(12px, 1rem, 16px);
+  font-weight: bold;
+  color: ghostwhite;
+  background: var(--color-buttons-container);
+  border-radius: 0.5em;
+}
+#toggle-hotkey-display:hover {
+  cursor: pointer;
+  background: #455a64;
+}
+
+/* MEDIA QUERY FOR A MAX-HEIGHT OF 600px AND A LANDSCAPE ORIENTATION */
+@media (max-height: 600px) and (orientation: landscape) {
+  /* MEDIA QUERY FOR CALCULATOR MAIN CONTAINER */
+  #calculator {
+    width: min(95%, 60em);
   }
-  to {
-    transform: rotate(360deg);
+
+  /* MEDIA QUERY FOR DISPLAY CONTAINER AND HOTKEYS TITLE */
+  #display-container,
+  #hotkeys-title {
+    height: 5rem;
+  }
+
+  /* MEDIA QUERY FOR HOTKEYS TITLE */
+  #hotkeys-title {
+    font-size: 3rem;
+  }
+
+  /* MEDIA QUERY FOR BUTTONS CONTAINER AND HOTKEYS CONTAINER */
+  #buttons-container,
+  #hotkeys-container {
+    height: calc(100% - 5em);
+  }
+
+  /* MEDIA QUERY FOR BUTTON AND HOTKEY */
+  .button,
+  .hotkey {
+    aspect-ratio: unset;
+  }
+
+  /* MEDIA QUERY FOR THE HOTKEY FOR BACKSPACE BUTTON */
+  .hotkey:nth-child(2) {
+    display: unset;
+    font-size: 2rem;
+  }
+
+  /* MEDIA QUERY FOR THE TEXTS IN THE HOTKEY FOR BACKSPACE BUTTON */
+  .hotkey:nth-child(2) span {
+    line-height: unset;
+  }
+
+  /* MEDIA QUERY FOR THE HOTKEY FOR EQUALS BUTTON */
+  .hotkey:last-child {
+    font-size: 2rem;
   }
 }
